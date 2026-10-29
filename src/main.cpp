@@ -1,3 +1,6 @@
+//Author: Saint Ezru
+// Date: 2026-10-29
+// Description: This program reads temperature, humidity, and pressure data from AHT20 and BMP280 sensors connected to an ESP32 microcontroller via I2C. It outputs the readings in CSV format over the serial connection every 2 seconds. The program also calculates the estimated altitude based on the pressure reading from the BMP280 sensor.
 #include <Arduino.h>
 #include <Wire.h>
 #include <Adafruit_AHTX0.h>
