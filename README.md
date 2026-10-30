@@ -99,6 +99,10 @@ API references: [ESP32 I2C](https://docs.espressif.com/projects/arduino-esp32/en
 
 ## Collaboration
 
+For the existing Django project and setup on a new Windows computer, start
+with [HOME_SETUP.md](HOME_SETUP.md). Current progress and pending decisions
+are recorded in [PROJECT_HANDOFF.md](PROJECT_HANDOFF.md).
+
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the branch and pull request workflow.
 Build artifacts, local Python environments, collected CSV files, and local
 databases are excluded from version control by `.gitignore`.
