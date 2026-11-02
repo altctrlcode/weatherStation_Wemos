@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="5">
+    <title>Weather station</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background: #eef3f7;
+            color: #183047;
+            margin: 0;
+            padding: 24px;
+        }
+        main {
+            max-width: 900px;
+            margin: 32px auto;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        article {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #18304712;
+        }
+        h2 { font-size: 1rem; margin-top: 0; }
+        .value { font-size: 2rem; margin: 0; }
+        .fresh { color: #166534; }
+        .stale { color: #9a3412; }
+        footer { margin-top: 24px; }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Weather station</h1>
+
+    {% if reading %}
+        <p>Station: {{ reading.station_id }}</p>
+
+        {% if is_stale %}
+            <p class="stale">No recent data — showing the last saved reading.</p>
+        {% else %}
+            <p class="fresh">Receiving recent readings</p>
+        {% endif %}
+
+        <div class="grid">
+            <article>
+                <h2>AHT20 temperature (°C)</h2>
+                <p class="value">
+                    {% if reading.aht20_temperature_C is None %}
+                        —
+                    {% else %}
+                        {{ reading.aht20_temperature_C|floatformat:2 }}
+                    {% endif %}
+                </p>
+            </article>
+            <article>
+                <h2>Relative humidity (%)</h2>
+                <p class="value">
+                    {% if reading.aht20_humidity_pct is None %}
+                        —
+                    {% else %}
+                        {{ reading.aht20_humidity_pct|floatformat:2 }}
+                    {% endif %}
+                </p>
+            </article>
+            <article>
+                <h2>BMP280 temperature (°C)</h2>
+                <p class="value">
+                    {% if reading.bmp280_temperature_C is None %}
+                        —
+                    {% else %}
+                        {{ reading.bmp280_temperature_C|floatformat:2 }}
+                    {% endif %}
+                </p>
+            </article>
+            <article>
+                <h2>Pressure (Pa)</h2>
+                <p class="value">
+                    {% if reading.bmp280_pressure_pa is None %}
+                        —
+                    {% else %}
+                        {{ reading.bmp280_pressure_pa|floatformat:2 }}
+                    {% endif %}
+                </p>
+            </article>
+            <article>
+                <h2>Estimated altitude (m)</h2>
+                <p class="value">
+                    {% if reading.estimated_altitude_m is None %}
+                        —
+                    {% else %}
+                        {{ reading.estimated_altitude_m|floatformat:2 }}
+                    {% endif %}
+                </p>
+            </article>
+        </div>
+
+        <p>Last received: {{ reading.received_at|date:"Y-m-d H:i:s T" }}</p>
+    {% else %}
+        <p>No readings saved yet. Start the serial collector to receive data.</p>
+    {% endif %}
+
+    <footer>Refreshes every 5 seconds · <a href="/admin/">Administration</a></footer>
+</main>
+
+</body>
+</html>
